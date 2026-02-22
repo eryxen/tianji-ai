@@ -116,6 +116,59 @@ body {
   box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
 }
 
+/* Select 样式 */
+.form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--deep-black);
+  border: 1px solid var(--cyber-purple);
+  border-radius: 5px;
+  color: var(--matrix-green);
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: var(--matrix-green);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+/* 单选按钮组 */
+.radio-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  background: var(--deep-black);
+  border: 1px solid var(--cyber-purple);
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+.radio-label:hover {
+  border-color: var(--matrix-green);
+}
+
+.radio-label input[type="radio"] {
+  display: none;
+}
+
+.radio-label input[type="radio"]:checked + span {
+  color: var(--matrix-green);
+}
+
+.radio-label:has(input[type="radio"]:checked) {
+  border-color: var(--matrix-green);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
 /* 按钮样式 */
 .cyber-button {
   position: relative;

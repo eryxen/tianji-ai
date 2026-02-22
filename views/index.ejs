@@ -10,7 +10,7 @@
   <div class="container">
     <!-- 头部 -->
     <header class="cyber-header">
-      <h1 class="glitch" data-text="天机AI">天机AI</h1>
+      <h1 class="glitch" data-text="Tianji AI">Tianji AI</h1>
       <p class="subtitle">赛博玄学实验室 | CYBER DIVINATION LAB</p>
       <div class="tagline">代码即命运 · 算法即天机</div>
     </header>
@@ -19,6 +19,27 @@
     <section class="input-section">
       <h2>🔮 八字算命</h2>
       <form id="baziForm">
+        <!-- 性别 -->
+        <div class="form-group">
+          <label>性别</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="gender" value="男" checked>
+              <span>男</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="gender" value="女">
+              <span>女</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 出生地 -->
+        <div class="form-group">
+          <label>出生地点</label>
+          <input type="text" id="birthplace" name="birthplace" placeholder="例如：北京、上海" required>
+        </div>
+
         <div class="form-grid">
           <div class="form-group">
             <label>出生年份</label>
@@ -34,7 +55,23 @@
           </div>
           <div class="form-group">
             <label>时辰</label>
-            <input type="number" id="hour" name="hour" placeholder="14" min="0" max="23" required>
+            <select id="hour" name="hour" required>
+              <option value="">选择时辰</option>
+              <option value="0">子时 (23:00-00:59)</option>
+              <option value="1">丑时 (01:00-02:59)</option>
+              <option value="2">寅时 (03:00-04:59)</option>
+              <option value="3">卯时 (05:00-06:59)</option>
+              <option value="4">辰时 (07:00-08:59)</option>
+              <option value="5">巳时 (09:00-10:59)</option>
+              <option value="6">午时 (11:00-12:59)</option>
+              <option value="7">未时 (13:00-14:59)</option>
+              <option value="8">申时 (15:00-16:59)</option>
+              <option value="9">酉时 (17:00-18:59)</option>
+              <option value="10">戌时 (19:00-20:59)</option>
+              <option value="11">亥时 (21:00-22:59)</option>
+              <option value="12">早子时 (00:00-00:59)</option>
+              <option value="13">晚子时 (23:00-23:59)</option>
+            </select>
           </div>
         </div>
         <button type="submit" class="cyber-button">

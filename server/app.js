@@ -25,9 +25,9 @@ app.get('/', (req, res) => {
 // 八字计算API
 app.post('/api/bazi', (req, res) => {
   try {
-    const { year, month, day, hour } = req.body;
+    const { year, month, day, hour, gender, birthplace } = req.body;
     
-    if (!year || !month || !day || !hour) {
+    if (!year || !month || !day || hour === undefined) {
       return res.status(400).json({ 
         error: '缺少必要参数：年月日时' 
       });
@@ -40,6 +40,10 @@ app.post('/api/bazi', (req, res) => {
       hour: parseInt(hour),
       minute: 0
     });
+
+    // 添加用户输入的附加信息
+    result.gender = gender || '未指定';
+    result.birthplace = birthplace || '未指定';
 
     res.json(result);
   } catch (error) {

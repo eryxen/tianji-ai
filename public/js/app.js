@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
       year: parseInt(document.getElementById('year').value),
       month: parseInt(document.getElementById('month').value),
       day: parseInt(document.getElementById('day').value),
-      hour: parseInt(document.getElementById('hour').value)
+      hour: parseInt(document.getElementById('hour').value),
+      gender: document.querySelector('input[name="gender"]:checked').value,
+      birthplace: document.getElementById('birthplace').value
     };
 
     // 显示加载状态
@@ -48,8 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 基本信息
     const inputStr = `${data.solar.year}-${data.solar.month}-${data.solar.day} ${data.solar.hour}:00`;
-    html += `<div class="terminal-line">📅 输入时间: ${inputStr}</div>`;
+    html += `<div class="terminal-line">📅 出生时间: ${inputStr}</div>`;
     html += `<div class="terminal-line">🌙 农历: ${data.lunar.year}年 ${data.lunar.month}月 ${data.lunar.day}日</div>`;
+    html += `<div class="terminal-line">👤 性别: ${data.gender}</div>`;
+    html += `<div class="terminal-line">📍 出生地: ${data.birthplace}</div>`;
 
     // 八字结果 - 从嵌套对象中提取
     const baziArray = [
