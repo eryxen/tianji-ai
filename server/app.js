@@ -33,12 +33,13 @@ app.post('/api/bazi', (req, res) => {
       });
     }
 
-    const result = calculateBazi(
-      parseInt(year),
-      parseInt(month),
-      parseInt(day),
-      parseInt(hour)
-    );
+    const result = calculateBazi({
+      year: parseInt(year),
+      month: parseInt(month),
+      day: parseInt(day),
+      hour: parseInt(hour),
+      minute: 0
+    });
 
     res.json(result);
   } catch (error) {
