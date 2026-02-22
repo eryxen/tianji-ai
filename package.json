@@ -4,7 +4,7 @@
   "description": "天机AI - 赛博玄学实验室 | Cyber Divination Lab",
   "main": "server/app.js",
   "scripts": {
-    "start": "node test-server.js",
+    "start": "node server/app.js",
     "dev": "nodemon server/app.js"
   },
   "keywords": ["ai", "bazi", "chinese-astrology", "divination", "cyber"],
