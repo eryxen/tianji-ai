@@ -1,0 +1,10 @@
+{
+  "$schema": "https://zeabur.com/zeabur.json",
+  "build": {
+    "env": {}
+  },
+  "deploy": {
+    "port": 3000,
+    "ignoreBuildScript": false
+  }
+}
