@@ -47,11 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let html = '';
 
     // 基本信息
-    html += `<div class="terminal-line">📅 输入时间: ${data.input}</div>`;
-    html += `<div class="terminal-line">🌙 农历: ${data.lunar}</div>`;
+    const inputStr = `${data.solar.year}-${data.solar.month}-${data.solar.day} ${data.solar.hour}:00`;
+    html += `<div class="terminal-line">📅 输入时间: ${inputStr}</div>`;
+    html += `<div class="terminal-line">🌙 农历: ${data.lunar.year}年 ${data.lunar.month}月 ${data.lunar.day}日</div>`;
 
-    // 八字结果
-    html += `<div class="bazi-result">🔮 八字: ${data.bazi.join(' ')}</div>`;
+    // 八字结果 - 从嵌套对象中提取
+    const baziArray = [
+      data.year.pillar,
+      data.month.pillar,
+      data.day.pillar,
+      data.hour.pillar
+    ];
+    html += `<div class="bazi-result">🔮 八字: ${baziArray.join(' ')}</div>`;
 
     // 五行分布
     html += `<div class="terminal-line" style="margin-top: 1.5rem;">📊 五行分布:</div>`;
