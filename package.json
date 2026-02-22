@@ -1,0 +1,21 @@
+{
+  "name": "tianji-ai",
+  "version": "1.0.0",
+  "description": "天机AI - 赛博玄学实验室 | Cyber Divination Lab",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "dev": "nodemon server/app.js"
+  },
+  "keywords": ["ai", "bazi", "chinese-astrology", "divination", "cyber"],
+  "author": "Xen + Lycan",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "lunar-javascript": "^1.6.12",
+    "ejs": "^3.1.9"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
