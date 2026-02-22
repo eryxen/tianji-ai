@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { calculateBazi } = require('../utils/bazi');
+const { calculateBazi, calculateDayun, calculateLiunian, generateKLinedata } = require('../utils/bazi');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -67,6 +67,27 @@ app.post('/api/bazi', (req, res) => {
     // 添加用户输入的附加信息
     result.gender = gender || '未指定';
     result.birthplace = birthplace || '未指定';
+    
+    // 计算大运和流年
+    const dayun = calculateDayun({
+      year: parseInt(year),
+      month: parseInt(month),
+      day: parseInt(day),
+      hour: hourValue,
+      minute: 0
+    });
+    
+    // 生成人生K线图数据
+    const klineData = generateKLinedata({
+      year: parseInt(year),
+      month: parseInt(month),
+      day: parseInt(day),
+      hour: hourValue,
+      minute: 0
+    }, result);
+    
+    result.dayun = dayun;
+    result.kline = klineData;
 
     res.json(result);
   } catch (error) {

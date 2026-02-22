@@ -113,6 +113,50 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
+    // 大运显示
+    if (data.dayun && data.dayun.length > 0) {
+      html += `<div class="terminal-line" style="margin-top: 1.5rem;">🚄 大运 (每10年一步):</div>`;
+      html += '<div class="dayun-grid">';
+      data.dayun.forEach(d => {
+        const wuxingColors = {'mu': '#4CAF50', 'huo': '#F44336', 'tu': '#795548', 'jin': '#FF9800', 'shui': '#03A9F4'};
+        html += `
+          <div class="dayun-item" style="border-left: 3px solid ${wuxingColors[d.wuxing] || '#9D4EDD'};">
+            <div class="dayun-age">${d.age}岁</div>
+            <div class="dayun-pillar">${d.pillar}</div>
+            <div class="dayun-range">${d.range}岁</div>
+          </div>
+        `;
+      });
+      html += '</div>';
+    }
+
+    // 人生K线图
+    if (data.kline && data.kline.liunian) {
+      html += `<div class="terminal-line" style="margin-top: 1.5rem;">📈 人生运势K线图:</div>`;
+      html += '<div class="kline-chart" id="klineChart">';
+      
+      // 简化的K线图展示
+      const kline = data.kline.liunian;
+      const years = kline.map(k => k.year);
+      const scores = kline.map(k => k.score);
+      
+      html += '<div class="kline-bars">';
+      kline.forEach((k, i) => {
+        const height = k.score;
+        const color = k.score >= 60 ? '#00FF41' : (k.score >= 40 ? '#FFD700' : '#FF4444');
+        html += `<div class="kline-bar" style="height: ${height}%; background: ${color};" title="${k.year}: ${k.pillar} (${k.score}分)"></div>`;
+      });
+      html += '</div>';
+      
+      html += '<div class="kline-labels">';
+      html += `<span>${years[0]}</span>`;
+      html += `<span>${years[Math.floor(years.length/2)]}</span>`;
+      html += `<span>${years[years.length-1]}</span>`;
+      html += '</div>';
+      
+      html += '</div>';
+    }
+
     resultContent.innerHTML = html;
 
     // 添加打字机效果

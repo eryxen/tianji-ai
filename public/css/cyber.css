@@ -303,3 +303,94 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* 大运显示 */
+.dayun-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.dayun-item {
+  background: rgba(157, 78, 221, 0.1);
+  padding: 0.5rem;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.dayun-age {
+  color: var(--cyber-purple);
+  font-size: 0.8rem;
+}
+
+.dayun-pillar {
+  color: var(--matrix-green);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.dayun-range {
+  color: rgba(0, 255, 65, 0.6);
+  font-size: 0.7rem;
+}
+
+/* K线图 */
+.kline-chart {
+  background: var(--deep-black);
+  border: 1px solid var(--cyber-purple);
+  border-radius: 5px;
+  padding: 1rem;
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.kline-bars {
+  display: flex;
+  align-items: flex-end;
+  height: 150px;
+  gap: 2px;
+  min-width: 500px;
+}
+
+.kline-bar {
+  flex: 1;
+  min-width: 4px;
+  border-radius: 2px 2px 0 0;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.kline-bar:hover {
+  opacity: 0.8;
+  transform: scaleY(1.05);
+}
+
+.kline-labels {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(0, 255, 65, 0.6);
+  font-size: 0.7rem;
+  margin-top: 0.5rem;
+  padding: 0 10px;
+}
+
+/* K线图图例 */
+.kline-legend {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+
+.kline-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.kline-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}

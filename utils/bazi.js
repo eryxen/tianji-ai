@@ -57,6 +57,151 @@ const WUXING_COLORS = {
  * @param {Object} datetime - {year, month, day, hour, minute}
  * @returns {Object} 八字信息
  */
+/**
+ * 计算大运
+ * @param {Object} datetime - 出生时间
+ * @returns {Array} 大运数组
+ */
+function calculateDayun(datetime) {
+  const { year, month, day, hour, minute } = datetime;
+  const solar = Solar.fromYmdHms(year, month, day, hour, minute, 0);
+  const lunar = solar.getLunar();
+  const bazi = lunar.getEightChar();
+  
+  // 获取月柱天干
+  const monthGan = bazi.getMonthGan();
+  const monthZhi = bazi.getMonthZhi();
+  
+  // 大运天干顺序
+  const ganSequence = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+  const zhiSequence = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+  
+  // 计算大运起始年龄（从月柱推算）
+  let monthGanIndex = ganSequence.indexOf(monthGan);
+  let monthZhiIndex = zhiSequence.indexOf(monthZhi);
+  
+  // 阳干顺推，阴干逆推
+  const isYang = monthGanIndex % 2 === 0;
+  
+  const dayun = [];
+  const startAge = 8; // 一般从8岁开始
+  
+  for (let i = 0; i < 10; i++) {
+    const ganIndex = isYang 
+      ? (monthGanIndex + i + 1) % 10 
+      : (monthGanIndex - i - 1 + 10) % 10;
+    const zhiIndex = isYang 
+      ? (monthZhiIndex + i + 1) % 12 
+      : (monthZhiIndex - i - 1 + 12) % 12;
+    
+    dayun.push({
+      age: startAge + i * 10,
+      range: `${startAge + i * 10}-${startAge + (i + 1) * 10 - 1}`,
+      gan: ganSequence[ganIndex],
+      zhi: zhiSequence[zhiIndex],
+      pillar: ganSequence[ganIndex] + zhiSequence[zhiIndex],
+      wuxing: WUXING_MAP[ganSequence[ganIndex]]
+    });
+  }
+  
+  return dayun;
+}
+
+/**
+ * 计算流年 (未来100年)
+ * @param {Object} datetime - 出生时间
+ * @returns {Array} 流年数组
+ */
+function calculateLiunian(datetime) {
+  const { year } = datetime;
+  const ganSequence = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+  const zhiSequence = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+  
+  const liunian = [];
+  
+  // 计算从当前年份到100年后的流年
+  const currentYear = new Date().getFullYear();
+  const startYear = Math.max(year, currentYear - 10); // 从10年前开始
+  
+  for (let i = 0; i < 80; i++) {
+    const y = startYear + i;
+    const ganIndex = (y - 4) % 10; // 甲子年=1984
+    const zhiIndex = (y - 4) % 12;
+    
+    liunian.push({
+      year: y,
+      gan: ganSequence[ganIndex],
+      zhi: zhiSequence[zhiIndex],
+      pillar: ganSequence[ganIndex] + zhiSequence[zhiIndex],
+      wuxing: WUXING_MAP[ganSequence[ganIndex]]
+    });
+  }
+  
+  return liunian;
+}
+
+/**
+ * 生成人生K线图数据
+ * @param {Object} datetime - 出生时间
+ * @param {Object} baziData - 八字数据
+ * @returns {Object} K线图数据
+ */
+function generateKLinedata(datetime, baziData) {
+  const { year: birthYear } = datetime;
+  const dayun = calculateDayun(datetime);
+  const liunian = calculateLiunian(datetime);
+  
+  // 计算每个大运的"运势值"
+  // 基于五行生克和日主强弱
+  const wuxing = baziData.wuxing.percentages;
+  const dayZhi = baziData.day.zhi;
+  const dayGan = baziData.day.gan;
+  
+  // 日主五行
+  const rizhuWuxing = WUXING_MAP[dayGan];
+  
+  // 计算每个流年的运势值 (0-100)
+  const klineData = liunian.map((ln, index) => {
+    let score = 50; // 基础分
+    
+    // 大运影响
+    const currentDayun = dayun.find(d => {
+      const [start, end] = d.range.split('-').map(Number);
+      return ln.year >= birthYear + start && ln.year <= birthYear + end;
+    });
+    
+    if (currentDayun) {
+      // 五行相生加分，相克减分
+      const dayunWuxing = currentDayun.wuxing;
+      const wuxingRelations = {
+        'mu': {'mu': 50, 'huo': 80, 'tu': 60, 'jin': 30, 'shui': 70},
+        'huo': {'mu': 70, 'huo': 50, 'tu': 80, 'jin': 30, 'shui': 60},
+        'tu': {'mu': 60, 'huo': 70, 'tu': 50, 'jin': 80, 'shui': 30},
+        'jin': {'mu': 30, 'huo': 60, 'tu': 70, 'jin': 50, 'shui': 80},
+        'shui': {'mu': 80, 'huo': 30, 'tu': 60, 'jin': 70, 'shui': 50}
+      };
+      
+      score = wuxingRelations[rizhuWuxing]?.[dayunWuxing] || 50;
+    }
+    
+    // 添加一些随机波动模拟人生起伏
+    const fluctuation = Math.sin(index * 0.3) * 15;
+    score = Math.max(10, Math.min(90, score + fluctuation));
+    
+    return {
+      year: ln.year,
+      pillar: ln.pillar,
+      wuxing: ln.wuxing,
+      score: Math.round(score)
+    };
+  });
+  
+  return {
+    dayun,
+    liunian: klineData
+  };
+}
+
 function calculateBazi(datetime) {
   const { year, month, day, hour, minute } = datetime;
   
@@ -306,6 +451,9 @@ module.exports = {
   countWuxing,
   generateSteps,
   generateExportCode,
+  calculateDayun,
+  calculateLiunian,
+  generateKLinedata,
   TIAN_GAN,
   DI_ZHI,
   WUXING_MAP,
