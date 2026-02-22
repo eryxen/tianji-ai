@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 // 首页
 app.get('/', (req, res) => {
   res.render('index', { 
-    title: '天机AI - 赛博玄学实验室',
+    title: '天机 - 赛博玄学',
     result: null 
   });
 });
