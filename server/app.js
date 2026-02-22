@@ -22,22 +22,45 @@ app.get('/', (req, res) => {
   });
 });
 
+// 十二时辰到小时的映射
+const SHICHEN_TO_HOUR = {
+  '0': 23,   // 子时 (23:00-00:59)
+  '1': 1,    // 丑时
+  '2': 3,    // 寅时
+  '3': 5,    // 卯时
+  '4': 7,    // 辰时
+  '5': 9,    // 巳时
+  '6': 11,   // 午时
+  '7': 13,   // 未时
+  '8': 15,   // 申时
+  '9': 17,   // 酉时
+  '10': 19,  // 戌时
+  '11': 21,  // 亥时
+  '12': 0,   // 早子时
+  '13': 23   // 晚子时
+};
+
 // 八字计算API
 app.post('/api/bazi', (req, res) => {
   try {
     const { year, month, day, hour, gender, birthplace } = req.body;
     
-    if (!year || !month || !day || hour === undefined) {
+    if (!year || !month || !day || hour === undefined || hour === '') {
       return res.status(400).json({ 
         error: '缺少必要参数：年月日时' 
       });
     }
 
+    // 转换时辰为小时
+    const hourValue = SHICHEN_TO_HOUR[String(hour)] !== undefined 
+      ? SHICHEN_TO_HOUR[String(hour)] 
+      : parseInt(hour);
+
     const result = calculateBazi({
       year: parseInt(year),
       month: parseInt(month),
       day: parseInt(day),
-      hour: parseInt(hour),
+      hour: hourValue,
       minute: 0
     });
 
