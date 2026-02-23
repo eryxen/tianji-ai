@@ -38,6 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
       birthplace: document.getElementById('birthplace').value
     };
 
+    // 触发粒子加速效果
+    if (window.cyberParticles) {
+      window.cyberParticles.boost();
+    }
+
     // 显示加载状态
     resultSection.style.display = 'block';
     resultContent.innerHTML = '<div class="terminal-line typing">⏳ 正在计算命盘<span class="loading">...</span></div>';

@@ -19,6 +19,27 @@ body {
   line-height: 1.6;
   min-height: 100vh;
   position: relative;
+  overflow-x: hidden;
+}
+
+/* ===================================
+   粒子背景画布
+   =================================== */
+#particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: auto;
+}
+
+/* 降低动效偏好时禁用粒子动画 */
+@media (prefers-reduced-motion: reduce) {
+  #particles-canvas {
+    display: none;
+  }
 }
 
 /* 赛博扫描线效果 */
@@ -48,6 +69,8 @@ body::before {
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* ===================================
@@ -59,7 +82,8 @@ body::before {
   padding: 2rem;
   border: 2px solid var(--cyber-purple);
   border-radius: 10px;
-  background: linear-gradient(135deg, rgba(157, 78, 221, 0.1), rgba(0, 255, 65, 0.05));
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.08), rgba(0, 255, 65, 0.03));
+  backdrop-filter: blur(5px);
   box-shadow: 0 0 20px var(--border-glow);
 }
 
@@ -98,7 +122,8 @@ body::before {
    表单样式
    =================================== */
 .input-section, .result-section {
-  background: var(--dark-gray);
+  background: rgba(22, 27, 34, 0.85);
+  backdrop-filter: blur(8px);
   padding: 2rem;
   border: 1px solid var(--cyber-purple);
   border-radius: 10px;
