@@ -652,3 +652,159 @@ body::before {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--matrix-green);
 }
+
+/* 出生地点 - 地图功能 */
+.birthplace-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.birthplace-wrapper input {
+  flex: 1;
+}
+
+.map-toggle-btn {
+  padding: 0.8rem 1rem;
+  background: var(--deep-black);
+  border: 1px solid var(--cyber-purple);
+  border-radius: 5px;
+  color: var(--matrix-green);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.map-toggle-btn:hover {
+  border-color: var(--matrix-green);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.map-container {
+  margin-top: 0.8rem;
+  border: 1px solid var(--cyber-purple);
+  border-radius: 8px;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.map-canvas {
+  width: 100%;
+  height: 280px;
+  background: var(--deep-black);
+  cursor: crosshair;
+  position: relative;
+}
+
+.map-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background: rgba(22, 27, 34, 0.95);
+  border-top: 1px solid rgba(157, 78, 221, 0.3);
+  gap: 0.5rem;
+}
+
+.map-coords {
+  color: var(--cyber-purple);
+  font-size: 0.8rem;
+  flex: 1;
+}
+
+.map-confirm-btn, .map-close-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--cyber-purple);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--matrix-green);
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.map-confirm-btn {
+  border-color: var(--matrix-green);
+}
+
+.map-confirm-btn:hover {
+  background: rgba(0, 255, 65, 0.15);
+}
+
+.map-close-btn:hover {
+  background: rgba(157, 78, 221, 0.15);
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  z-index: 100;
+  background: var(--dark-gray);
+  border: 1px solid var(--cyber-purple);
+  border-radius: 5px;
+  max-height: 200px;
+  overflow-y: auto;
+  width: calc(100% - 3.5rem);
+}
+
+.suggestion-item {
+  padding: 0.6rem 1rem;
+  color: var(--matrix-green);
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(157, 78, 221, 0.15);
+  transition: background 0.2s;
+}
+
+.suggestion-item:hover {
+  background: rgba(157, 78, 221, 0.2);
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+/* 地图标记点 */
+.map-marker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--matrix-green);
+  border: 2px solid white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.map-marker::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(0, 255, 65, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: markerPulse 2s infinite;
+}
+
+@keyframes markerPulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
+
+@media (max-width: 480px) {
+  .map-canvas {
+    height: 220px;
+  }
+}

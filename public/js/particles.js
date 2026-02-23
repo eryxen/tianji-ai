@@ -9,7 +9,7 @@ class CyberParticles {
     this.ctx = this.canvas.getContext('2d');
     this.particles = [];
     this.mouse = { x: null, y: null, radius: 150 };
-    this.colors = ['#9D4EDD', '#00FF41']; // 赛博紫 + 矩阵绿
+    this.colors = ['#C0C0C0', '#4A9EFF']; // 银色 + 星空蓝
     this.animationId = null;
     this.isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -150,7 +150,7 @@ class CyberParticles {
           const angle = Math.atan2(dy, dx);
           
           // 根据粒子颜色决定吸引或排斥
-          const direction = particle.color === '#9D4EDD' ? -1 : 1; // 紫色排斥，绿色吸引
+          const direction = particle.color === '#C0C0C0' ? -1 : 1; // 银色排斥，蓝色吸引
           particle.vx += Math.cos(angle) * force * 0.05 * direction;
           particle.vy += Math.sin(angle) * force * 0.05 * direction;
         }
@@ -181,7 +181,7 @@ class CyberParticles {
           const opacity = (1 - distance / this.connectionDistance) * 0.3;
           
           this.ctx.beginPath();
-          this.ctx.strokeStyle = `rgba(157, 78, 221, ${opacity})`;
+          this.ctx.strokeStyle = `rgba(74, 158, 255, ${opacity})`;
           this.ctx.lineWidth = 0.5;
           this.ctx.moveTo(p1.x, p1.y);
           this.ctx.lineTo(p2.x, p2.y);

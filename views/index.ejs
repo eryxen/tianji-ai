@@ -69,12 +69,27 @@
         <!-- 出生地 -->
         <div class="form-group" style="margin-bottom: 1.5rem;">
           <label>出生地点</label>
-          <input type="text" 
-                 id="birthplace" 
-                 name="birthplace" 
-                 placeholder="例如：北京、上海、广州" 
-                 required
-                 aria-label="出生地点">
+          <div class="birthplace-wrapper">
+            <input type="text" 
+                   id="birthplace" 
+                   name="birthplace" 
+                   placeholder="输入城市名或点击地图选择" 
+                   required
+                   autocomplete="off"
+                   aria-label="出生地点">
+            <button type="button" id="mapToggle" class="map-toggle-btn" aria-label="打开地图选择">
+              📍
+            </button>
+          </div>
+          <div id="mapContainer" class="map-container" style="display: none;">
+            <div id="mapCanvas" class="map-canvas"></div>
+            <div class="map-controls">
+              <span id="mapCoords" class="map-coords">点击地图选择位置</span>
+              <button type="button" id="mapConfirm" class="map-confirm-btn" style="display:none;">确认</button>
+              <button type="button" id="mapClose" class="map-close-btn">关闭</button>
+            </div>
+          </div>
+          <div id="birthplaceSuggestions" class="suggestions-dropdown" style="display: none;"></div>
         </div>
 
         <!-- 出生时间 -->
@@ -148,15 +163,13 @@
 
     <!-- Footer -->
     <footer class="cyber-footer">
-      <p>Powered by Xen | 开源项目 | 算法透明</p>
-      <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">
-        基于 lunar-javascript 库 | 仅供娱乐参考
-      </p>
+      <p>Powered by Xen</p>
     </footer>
   </div>
 
   <!-- Scripts -->
   <script src="/js/particles.js"></script>
+  <script src="/js/map.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>
