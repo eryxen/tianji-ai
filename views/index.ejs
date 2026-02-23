@@ -3,7 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>天机 - 赛博玄学</title>
+  
+  <!-- SEO Meta Tags -->
+  <title>天机 - 赛博玄学 | AI八字算命 | 命理分析</title>
+  <meta name="description" content="天机AI - 基于算法的赛博玄学系统，在线八字排盘、五行分析、大运流年推算。代码即命运，算法即天机。免费、开源、透明的命理计算工具。">
+  <meta name="keywords" content="八字算命,生辰八字,五行分析,大运流年,AI算命,赛博玄学,命理分析,在线排盘">
+  <meta name="author" content="天机AI">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tianji.ai/">
+  <meta property="og:title" content="天机 - 赛博玄学 | AI八字算命">
+  <meta property="og:description" content="基于算法的赛博玄学系统，免费在线八字排盘、五行分析、大运流年推算。">
+  <meta property="og:image" content="/images/og-image.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://tianji.ai/">
+  <meta property="twitter:title" content="天机 - 赛博玄学">
+  <meta property="twitter:description" content="代码即命运，算法即天机。免费在线八字算命工具。">
+  <meta property="twitter:image" content="/images/og-image.png">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="/css/cyber.css">
 </head>
 <body>
@@ -18,10 +43,14 @@
     <!-- 输入区 -->
     <section class="input-section">
       <h2>🔮 八字算命</h2>
+      <p style="color: #9D4EDD; font-size: 0.9rem; margin-bottom: 1.5rem;">
+        输入您的出生信息，使用开源算法计算八字、五行、十神、用神及人生大运。
+      </p>
+      
       <form id="baziForm">
-        <!-- 性别 -->
-        <div class="form-group">
-          <label>性别</label>
+        <!-- 性别选择 -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label>性别（影响大运顺逆）</label>
           <div class="radio-group">
             <label class="radio-label">
               <input type="radio" name="gender" value="男" checked>
@@ -35,27 +64,54 @@
         </div>
 
         <!-- 出生地 -->
-        <div class="form-group">
+        <div class="form-group" style="margin-bottom: 1.5rem;">
           <label>出生地点</label>
-          <input type="text" id="birthplace" name="birthplace" placeholder="例如：北京、上海" required>
+          <input type="text" 
+                 id="birthplace" 
+                 name="birthplace" 
+                 placeholder="例如：北京、上海、广州" 
+                 required
+                 aria-label="出生地点">
         </div>
 
+        <!-- 出生时间 -->
         <div class="form-grid">
           <div class="form-group">
-            <label>出生年份</label>
-            <input type="number" id="year" name="year" placeholder="1990" min="1900" max="2100" required>
+            <label for="year">出生年份</label>
+            <input type="number" 
+                   id="year" 
+                   name="year" 
+                   placeholder="1990" 
+                   min="1900" 
+                   max="2100" 
+                   required
+                   aria-label="出生年份">
           </div>
           <div class="form-group">
-            <label>月份</label>
-            <input type="number" id="month" name="month" placeholder="5" min="1" max="12" required>
+            <label for="month">月份</label>
+            <input type="number" 
+                   id="month" 
+                   name="month" 
+                   placeholder="5" 
+                   min="1" 
+                   max="12" 
+                   required
+                   aria-label="出生月份">
           </div>
           <div class="form-group">
-            <label>日期</label>
-            <input type="number" id="day" name="day" placeholder="20" min="1" max="31" required>
+            <label for="day">日期</label>
+            <input type="number" 
+                   id="day" 
+                   name="day" 
+                   placeholder="20" 
+                   min="1" 
+                   max="31" 
+                   required
+                   aria-label="出生日期">
           </div>
           <div class="form-group">
-            <label>时辰</label>
-            <select id="hour" name="hour" required>
+            <label for="hour">时辰</label>
+            <select id="hour" name="hour" required aria-label="出生时辰">
               <option value="">选择时辰</option>
               <option value="0">子时 (23:00-00:59)</option>
               <option value="1">丑时 (01:00-02:59)</option>
@@ -74,9 +130,9 @@
             </select>
           </div>
         </div>
-        <button type="submit" class="cyber-button">
+        
+        <button type="submit" class="cyber-button" aria-label="开始计算八字">
           <span>开始计算</span>
-          <div class="cyber-button-glow"></div>
         </button>
       </form>
     </section>
@@ -89,10 +145,14 @@
 
     <!-- Footer -->
     <footer class="cyber-footer">
-      <p>Powered by Xen</p>
+      <p>Powered by Xen | 开源项目 | 算法透明</p>
+      <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">
+        基于 lunar-javascript 库 | 仅供娱乐参考
+      </p>
     </footer>
   </div>
 
+  <!-- Scripts -->
   <script src="/js/app.js"></script>
 </body>
 </html>

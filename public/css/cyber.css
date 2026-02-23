@@ -18,6 +18,30 @@ body {
   font-family: 'Courier New', monospace;
   line-height: 1.6;
   min-height: 100vh;
+  position: relative;
+}
+
+/* 赛博扫描线效果 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    transparent 50%, 
+    rgba(0, 255, 65, 0.03) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: scan-line 8s linear infinite;
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
 }
 
 .container {
@@ -26,7 +50,9 @@ body {
   padding: 2rem;
 }
 
-/* 头部样式 */
+/* ===================================
+   头部样式
+   =================================== */
 .cyber-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -68,7 +94,9 @@ body {
   opacity: 0.8;
 }
 
-/* 表单样式 */
+/* ===================================
+   表单样式
+   =================================== */
 .input-section, .result-section {
   background: var(--dark-gray);
   padding: 2rem;
@@ -98,25 +126,7 @@ body {
   font-size: 0.9rem;
 }
 
-.form-group input {
-  width: 100%;
-  padding: 0.8rem;
-  background: var(--deep-black);
-  border: 1px solid var(--cyber-purple);
-  border-radius: 5px;
-  color: var(--matrix-green);
-  font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  transition: all 0.3s;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: var(--matrix-green);
-  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-}
-
-/* Select 样式 */
+.form-group input,
 .form-group select {
   width: 100%;
   padding: 0.8rem;
@@ -129,6 +139,7 @@ body {
   transition: all 0.3s;
 }
 
+.form-group input:focus,
 .form-group select:focus {
   outline: none;
   border-color: var(--matrix-green);
@@ -169,7 +180,9 @@ body {
   box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
 }
 
-/* 按钮样式 */
+/* ===================================
+   按钮样式
+   =================================== */
 .cyber-button {
   position: relative;
   width: 100%;
@@ -196,7 +209,9 @@ body {
   z-index: 2;
 }
 
-/* 终端输出样式 */
+/* ===================================
+   终端输出样式
+   =================================== */
 .terminal-output {
   background: var(--deep-black);
   padding: 1.5rem;
@@ -204,18 +219,29 @@ body {
   border-radius: 5px;
   font-family: 'Courier New', monospace;
   color: var(--matrix-green);
-  max-height: 600px;
+  max-height: 800px;
   overflow-y: auto;
 }
 
 .terminal-line {
   margin: 0.5rem 0;
-  animation: typewriter 0.3s;
+}
+
+/* 打字机效果 */
+.typing {
+  opacity: 0;
+  animation: typewriter 0.5s forwards;
 }
 
 @keyframes typewriter {
-  from { opacity: 0; transform: translateX(-10px); }
-  to { opacity: 1; transform: translateX(0); }
+  from { 
+    opacity: 0; 
+    transform: translateX(-10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
 }
 
 .bazi-result {
@@ -228,6 +254,49 @@ body {
   border-left: 3px solid var(--cyber-purple);
 }
 
+/* ===================================
+   十神显示
+   =================================== */
+.shishen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.shishen-item {
+  background: rgba(0, 255, 65, 0.05);
+  padding: 0.8rem;
+  border: 1px solid var(--cyber-purple);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.shishen-item.current {
+  background: rgba(157, 78, 221, 0.2);
+  border-color: var(--matrix-green);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.shishen-item .label {
+  color: var(--cyber-purple);
+  font-size: 0.85rem;
+}
+
+/* ===================================
+   用神显示
+   =================================== */
+.yongshen-box {
+  background: rgba(157, 78, 221, 0.05);
+  padding: 1rem;
+  border-left: 3px solid var(--cyber-purple);
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+/* ===================================
+   五行分布
+   =================================== */
 .wuxing-chart {
   margin: 1rem 0;
 }
@@ -257,6 +326,11 @@ body {
   height: 100%;
   background: linear-gradient(90deg, var(--cyber-purple), var(--matrix-green));
   transition: width 1s ease;
+  animation: fillBar 1.5s ease-out;
+}
+
+@keyframes fillBar {
+  from { width: 0; }
 }
 
 .wuxing-value {
@@ -265,20 +339,170 @@ body {
   color: var(--matrix-green);
 }
 
-/* Footer */
+/* ===================================
+   大运显示（优化标记当前大运）
+   =================================== */
+.dayun-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.dayun-item {
+  background: rgba(157, 78, 221, 0.1);
+  padding: 0.8rem;
+  border-radius: 5px;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.dayun-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(157, 78, 221, 0.4);
+}
+
+/* 当前大运高亮 */
+.dayun-item.current-dayun {
+  background: rgba(0, 255, 65, 0.15);
+  border: 2px solid var(--matrix-green);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+  transform: scale(1.05);
+}
+
+.dayun-current-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--matrix-green);
+  color: var(--deep-black);
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.dayun-age {
+  color: var(--cyber-purple);
+  font-size: 0.85rem;
+}
+
+.dayun-pillar {
+  color: var(--matrix-green);
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0.3rem 0;
+}
+
+.dayun-range {
+  color: rgba(0, 255, 65, 0.6);
+  font-size: 0.75rem;
+}
+
+/* ===================================
+   K线图样式（优化tooltip）
+   =================================== */
+.kline-chart {
+  background: var(--deep-black);
+  border: 1px solid var(--cyber-purple);
+  border-radius: 5px;
+  padding: 1rem;
+  margin-top: 1rem;
+  overflow-x: auto;
+  position: relative;
+}
+
+.kline-bars {
+  display: flex;
+  align-items: flex-end;
+  height: 180px;
+  gap: 2px;
+  min-width: 600px;
+}
+
+.kline-bar {
+  flex: 1;
+  min-width: 5px;
+  border-radius: 2px 2px 0 0;
+  transition: all 0.3s;
+  cursor: pointer;
+  position: relative;
+}
+
+.kline-bar:hover {
+  opacity: 0.8;
+  transform: scaleY(1.05);
+  box-shadow: 0 0 10px currentColor;
+}
+
+.kline-labels {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(0, 255, 65, 0.6);
+  font-size: 0.75rem;
+  margin-top: 0.8rem;
+  padding: 0 10px;
+}
+
+/* K线图图例 */
+.kline-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.kline-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.kline-legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+/* K线图tooltip */
+.kline-tooltip {
+  position: absolute;
+  background: rgba(22, 27, 34, 0.95);
+  border: 1px solid var(--matrix-green);
+  border-radius: 5px;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.85rem;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.kline-tooltip div {
+  margin: 0.2rem 0;
+}
+
+/* ===================================
+   Footer
+   =================================== */
 .cyber-footer {
   text-align: center;
   padding: 2rem;
   color: rgba(0, 255, 65, 0.6);
   font-size: 0.9rem;
   border-top: 1px solid rgba(157, 78, 221, 0.3);
+  margin-top: 2rem;
 }
 
 .cyber-footer p {
   margin: 0.3rem 0;
 }
 
-/* 加载动画 */
+/* ===================================
+   加载动画
+   =================================== */
 .loading {
   display: inline-block;
   animation: blink 1s infinite;
@@ -289,7 +513,9 @@ body {
   51%, 100% { opacity: 0; }
 }
 
-/* 响应式 */
+/* ===================================
+   响应式（移动端优化）
+   =================================== */
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
@@ -299,98 +525,105 @@ body {
     font-size: 2rem;
   }
   
+  .subtitle {
+    font-size: 1rem;
+  }
+  
   .form-grid {
     grid-template-columns: 1fr;
   }
+  
+  .input-section, .result-section {
+    padding: 1.5rem;
+  }
+  
+  .bazi-result {
+    font-size: 1.2rem;
+  }
+  
+  .wuxing-label {
+    width: 60px;
+  }
+  
+  .wuxing-value {
+    width: 50px;
+  }
+  
+  .dayun-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .dayun-item {
+    padding: 0.5rem;
+  }
+  
+  .dayun-pillar {
+    font-size: 1rem;
+  }
+  
+  .kline-bars {
+    height: 150px;
+    min-width: 400px;
+  }
+  
+  .kline-legend {
+    gap: 1rem;
+  }
+  
+  .shishen-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-/* 大运显示 */
-.dayun-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 0.5rem;
-  margin-top: 1rem;
+@media (max-width: 480px) {
+  .glitch {
+    font-size: 1.5rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+  
+  .tagline {
+    font-size: 0.75rem;
+  }
+  
+  .input-section, .result-section {
+    padding: 1rem;
+  }
+  
+  .radio-group {
+    flex-direction: column;
+  }
+  
+  .kline-bars {
+    min-width: 300px;
+  }
+  
+  .kline-legend {
+    font-size: 0.7rem;
+  }
 }
 
-.dayun-item {
-  background: rgba(157, 78, 221, 0.1);
-  padding: 0.5rem;
-  border-radius: 5px;
-  text-align: center;
+/* ===================================
+   滚动条样式
+   =================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.dayun-age {
-  color: var(--cyber-purple);
-  font-size: 0.8rem;
-}
-
-.dayun-pillar {
-  color: var(--matrix-green);
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.dayun-range {
-  color: rgba(0, 255, 65, 0.6);
-  font-size: 0.7rem;
-}
-
-/* K线图 */
-.kline-chart {
+::-webkit-scrollbar-track {
   background: var(--deep-black);
-  border: 1px solid var(--cyber-purple);
-  border-radius: 5px;
-  padding: 1rem;
-  margin-top: 1rem;
-  overflow-x: auto;
 }
 
-.kline-bars {
-  display: flex;
-  align-items: flex-end;
-  height: 150px;
-  gap: 2px;
-  min-width: 500px;
+::-webkit-scrollbar-thumb {
+  background: var(--cyber-purple);
+  border-radius: 4px;
 }
 
-.kline-bar {
-  flex: 1;
-  min-width: 4px;
-  border-radius: 2px 2px 0 0;
-  transition: all 0.3s;
-  cursor: pointer;
-}
-
-.kline-bar:hover {
-  opacity: 0.8;
-  transform: scaleY(1.05);
-}
-
-.kline-labels {
-  display: flex;
-  justify-content: space-between;
-  color: rgba(0, 255, 65, 0.6);
-  font-size: 0.7rem;
-  margin-top: 0.5rem;
-  padding: 0 10px;
-}
-
-/* K线图图例 */
-.kline-legend {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-  font-size: 0.8rem;
-}
-
-.kline-legend-item {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.kline-legend-color {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--matrix-green);
 }
